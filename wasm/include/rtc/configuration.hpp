@@ -55,8 +55,11 @@ struct IceServer {
 	RelayType relayType;
 };
 
+enum class TransportPolicy : int { All = 0, Relay = 1 };
+
 struct Configuration {
 	std::vector<IceServer> iceServers;
+	TransportPolicy iceTransportPolicy = TransportPolicy::All;
 };
 
 } // namespace rtc

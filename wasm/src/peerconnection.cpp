@@ -30,7 +30,7 @@
 
 extern "C" {
 extern int rtcCreatePeerConnection(const char **pUrls, const char **pUsernames,
-                                   const char **pPasswords, int nIceServers);
+                                   const char **pPasswords, int nIceServers, bool relayOnly);
 extern void rtcDeletePeerConnection(int pc);
 extern char *rtcGetLocalDescription(int pc);
 extern char *rtcGetLocalDescriptionType(int pc);
@@ -140,7 +140,8 @@ PeerConnection::PeerConnection(const Configuration &config) {
 		password_ptrs.push_back(iceServer.password.c_str());
 	}
 	mId = rtcCreatePeerConnection(url_ptrs.data(), username_ptrs.data(), password_ptrs.data(),
-	                              config.iceServers.size());
+	                              config.iceServers.size(),
+	                              config.iceTransportPolicy == TransportPolicy::Relay);
 	if (!mId)
 		throw std::runtime_error("WebRTC not supported");
 
