@@ -249,13 +249,18 @@
 			return type;
 		},
 
-		rtcCreateDataChannel: function(pc, pLabel, unordered, maxRetransmits, maxPacketLifeTime) {
+		rtcCreateDataChannel: function(pc, pLabel, unordered, maxRetransmits, maxPacketLifeTime, pProtocol) {
 			if(!pc) return 0;
 			var label = UTF8ToString(pLabel);
 			var peerConnection = WEBRTC.peerConnectionsMap[pc];
 			var datachannelInit = {
 				ordered: !unordered,
 			};
+
+			if (pProtocol) {
+				var protocol = UTF8ToString(pProtocol);
+				if (protocol.length > 0) datachannelInit.protocol = protocol;
+			}
 
 			// Browsers throw an exception when both are present (even if set to null)
 			if (maxRetransmits >= 0) datachannelInit.maxRetransmits = maxRetransmits;
@@ -367,6 +372,13 @@
 			var label = WEBRTC.dataChannelsMap[dc].label;
 			stringToUTF8(label, pBuffer, size);
 			return lengthBytesUTF8(label);
+		},
+
+		rtcGetDataChannelProtocol: function(dc, pBuffer, size) {
+			if(!dc) return 0;
+			var protocol = WEBRTC.dataChannelsMap[dc].protocol || "";
+			stringToUTF8(protocol, pBuffer, size);
+			return lengthBytesUTF8(protocol);
 		},
 
 		rtcGetDataChannelUnordered: function(dc) {

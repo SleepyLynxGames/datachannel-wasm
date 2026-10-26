@@ -42,6 +42,7 @@ public:
 	bool isClosed() const override;
 	size_t bufferedAmount() const override;
 	string label() const;
+	string protocol() const;
 	Reliability reliability() const;
 
 	void setBufferedAmountLowThreshold(size_t amount) override;
@@ -51,6 +52,7 @@ private:
 
 	int mId;
 	string mLabel;
+	string mProtocol;
 	bool mConnected;
 
 	static void OpenCallback(void *ptr);

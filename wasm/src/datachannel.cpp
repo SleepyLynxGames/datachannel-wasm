@@ -32,6 +32,7 @@ extern "C" {
 extern void rtcDeleteDataChannel(int dc);
 extern void rtcCloseDataChannel(int dc);
 extern int rtcGetDataChannelLabel(int dc, char *buffer, int size);
+extern int rtcGetDataChannelProtocol(int dc, char *buffer, int size);
 extern int rtcGetDataChannelUnordered(int dc);
 extern int rtcGetDataChannelMaxPacketLifeTime(int dc);
 extern int rtcGetDataChannelMaxRetransmits(int dc);
@@ -95,6 +96,9 @@ DataChannel::DataChannel(int id) : mId(id), mConnected(false) {
 	char str[256];
 	rtcGetDataChannelLabel(mId, str, 256);
 	mLabel = str;
+
+	rtcGetDataChannelProtocol(mId, str, 256);
+	mProtocol = str;
 }
 
 DataChannel::~DataChannel() {
@@ -143,6 +147,8 @@ size_t DataChannel::bufferedAmount() const {
 }
 
 std::string DataChannel::label() const { return mLabel; }
+
+std::string DataChannel::protocol() const { return mProtocol; }
 
 Reliability DataChannel::reliability() const {
 	Reliability reliability = {};
