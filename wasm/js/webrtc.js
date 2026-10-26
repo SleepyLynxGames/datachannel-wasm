@@ -249,7 +249,7 @@
 			return type;
 		},
 
-		rtcCreateDataChannel: function(pc, pLabel, unordered, maxRetransmits, maxPacketLifeTime, pProtocol) {
+		rtcCreateDataChannel: function(pc, pLabel, unordered, maxRetransmits, maxPacketLifeTime, pProtocol, negotiated, id) {
 			if(!pc) return 0;
 			var label = UTF8ToString(pLabel);
 			var peerConnection = WEBRTC.peerConnectionsMap[pc];
@@ -260,6 +260,10 @@
 			if (pProtocol) {
 				var protocol = UTF8ToString(pProtocol);
 				if (protocol.length > 0) datachannelInit.protocol = protocol;
+			}
+			if (negotiated) {
+				datachannelInit.negotiated = true;
+				datachannelInit.id = id;
 			}
 
 			// Browsers throw an exception when both are present (even if set to null)

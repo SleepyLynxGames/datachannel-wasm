@@ -37,7 +37,8 @@ extern char *rtcGetLocalDescriptionType(int pc);
 extern char *rtcGetRemoteDescription(int pc);
 extern char *rtcGetRemoteDescriptionType(int pc);
 extern int rtcCreateDataChannel(int pc, const char *label, bool unordered, int maxRetransmits,
-                                int maxPacketLifeTime, const char *protocol);
+                                int maxPacketLifeTime, const char *protocol, bool negotiated,
+                                int id);
 extern void rtcSetDataChannelCallback(int pc, void (*dataChannelCallback)(int, void *));
 extern void rtcSetLocalDescriptionCallback(int pc,
                                            void (*descriptionCallback)(const char *, const char *,
@@ -219,9 +220,12 @@ shared_ptr<DataChannel> PeerConnection::createDataChannel(const string &label,
 	int maxPacketLifeTime =
 	    reliability.maxPacketLifeTime ? int(reliability.maxPacketLifeTime->count()) : -1;
 
-	return std::make_shared<DataChannel>(
-	    rtcCreateDataChannel(mId, label.c_str(), init.reliability.unordered, maxRetransmits,
-		                     maxPacketLifeTime, init.protocol.c_str()));
+	if (init.negotiated && !init.id)
+		throw std::invalid_argument("Negotiated data channel requires an id");
+
+	return std::make_shared<DataChannel>(rtcCreateDataChannel(
+	    mId, label.c_str(), init.reliability.unordered, maxRetransmits, maxPacketLifeTime,
+	    init.protocol.c_str(), init.negotiated, init.id ? int(*init.id) : 0));
 }
 
 void PeerConnection::setRemoteDescription(const Description &description) {
