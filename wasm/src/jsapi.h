@@ -1,0 +1,40 @@
+// The JS library (wasm/js/webrtc.js) exports its functions with the wasm_ prefix, so that the rtc* names are free for
+// the C API of rtc/rtc.h (capi.cpp). Only the C++ wrappers (datachannel.cpp, peerconnection.cpp) include this file, which
+// lets their extern declarations keep the short names.
+
+#ifndef RTC_JSAPI_H
+#define RTC_JSAPI_H
+
+#define rtcAddRemoteCandidate wasm_rtcAddRemoteCandidate
+#define rtcCloseDataChannel wasm_rtcCloseDataChannel
+#define rtcCreateDataChannel wasm_rtcCreateDataChannel
+#define rtcCreatePeerConnection wasm_rtcCreatePeerConnection
+#define rtcDeleteDataChannel wasm_rtcDeleteDataChannel
+#define rtcDeletePeerConnection wasm_rtcDeletePeerConnection
+#define rtcGetBufferedAmount wasm_rtcGetBufferedAmount
+#define rtcGetDataChannelLabel wasm_rtcGetDataChannelLabel
+#define rtcGetDataChannelMaxPacketLifeTime wasm_rtcGetDataChannelMaxPacketLifeTime
+#define rtcGetDataChannelMaxRetransmits wasm_rtcGetDataChannelMaxRetransmits
+#define rtcGetDataChannelProtocol wasm_rtcGetDataChannelProtocol
+#define rtcGetDataChannelUnordered wasm_rtcGetDataChannelUnordered
+#define rtcGetLocalDescription wasm_rtcGetLocalDescription
+#define rtcGetLocalDescriptionType wasm_rtcGetLocalDescriptionType
+#define rtcGetRemoteDescription wasm_rtcGetRemoteDescription
+#define rtcGetRemoteDescriptionType wasm_rtcGetRemoteDescriptionType
+#define rtcSendMessage wasm_rtcSendMessage
+#define rtcSetBufferedAmountLowCallback wasm_rtcSetBufferedAmountLowCallback
+#define rtcSetBufferedAmountLowThreshold wasm_rtcSetBufferedAmountLowThreshold
+#define rtcSetDataChannelCallback wasm_rtcSetDataChannelCallback
+#define rtcSetErrorCallback wasm_rtcSetErrorCallback
+#define rtcSetGatheringStateChangeCallback wasm_rtcSetGatheringStateChangeCallback
+#define rtcSetIceStateChangeCallback wasm_rtcSetIceStateChangeCallback
+#define rtcSetLocalCandidateCallback wasm_rtcSetLocalCandidateCallback
+#define rtcSetLocalDescriptionCallback wasm_rtcSetLocalDescriptionCallback
+#define rtcSetMessageCallback wasm_rtcSetMessageCallback
+#define rtcSetOpenCallback wasm_rtcSetOpenCallback
+#define rtcSetRemoteDescription wasm_rtcSetRemoteDescription
+#define rtcSetSignalingStateChangeCallback wasm_rtcSetSignalingStateChangeCallback
+#define rtcSetStateChangeCallback wasm_rtcSetStateChangeCallback
+#define rtcSetUserPointer wasm_rtcSetUserPointer
+
+#endif // RTC_JSAPI_H

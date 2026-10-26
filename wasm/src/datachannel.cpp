@@ -21,7 +21,7 @@
  */
 
 #include "datachannel.hpp"
-
+#include "jsapi.h"
 #include <emscripten/emscripten.h>
 
 #include <chrono>

@@ -21,7 +21,7 @@
  */
 
 #include "peerconnection.hpp"
-
+#include "jsapi.h"
 #include <emscripten/emscripten.h>
 
 #include <exception>

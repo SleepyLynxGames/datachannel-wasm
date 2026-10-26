@@ -170,7 +170,7 @@
 			},
 		},
 
-		rtcCreatePeerConnection: function(pUrls, pUsernames, pPasswords, nIceServers, relayOnly) {
+		wasm_rtcCreatePeerConnection: function(pUrls, pUsernames, pPasswords, nIceServers, relayOnly) {
 			if(!window.RTCPeerConnection) return 0;
 			var iceServers = [];
 			for(var i = 0; i < nIceServers; ++i) {
@@ -200,7 +200,7 @@
 			return WEBRTC.registerPeerConnection(new RTCPeerConnection(config));
 		},
 
-		rtcDeletePeerConnection: function(pc) {
+		wasm_rtcDeletePeerConnection: function(pc) {
 			var peerConnection = WEBRTC.peerConnectionsMap[pc];
 			if(peerConnection) {
 				peerConnection.close();
@@ -209,7 +209,7 @@
 			}
 		},
 
-		rtcGetLocalDescription: function(pc) {
+		wasm_rtcGetLocalDescription: function(pc) {
 			if(!pc) return 0;
 			var peerConnection = WEBRTC.peerConnectionsMap[pc];
 			var localDescription = peerConnection.localDescription;
@@ -219,7 +219,7 @@
 			return sdp;
 		},
 
-		rtcGetLocalDescriptionType: function(pc) {
+		wasm_rtcGetLocalDescriptionType: function(pc) {
 			if(!pc) return 0;
 			var peerConnection = WEBRTC.peerConnectionsMap[pc];
 			var localDescription = peerConnection.localDescription;
@@ -229,7 +229,7 @@
 			return type;
 		},
 
-		rtcGetRemoteDescription: function(pc) {
+		wasm_rtcGetRemoteDescription: function(pc) {
 			if(!pc) return 0;
 			var peerConnection = WEBRTC.peerConnectionsMap[pc];
 			var remoteDescription = peerConnection.remoteDescription;
@@ -239,7 +239,7 @@
 			return sdp;
 		},
 
-		rtcGetRemoteDescriptionType: function(pc) {
+		wasm_rtcGetRemoteDescriptionType: function(pc) {
 			if(!pc) return 0;
 			var peerConnection = WEBRTC.peerConnectionsMap[pc];
 			var remoteDescription = peerConnection.remoteDescription;
@@ -249,7 +249,7 @@
 			return type;
 		},
 
-		rtcCreateDataChannel: function(pc, pLabel, unordered, maxRetransmits, maxPacketLifeTime, pProtocol, negotiated, id) {
+		wasm_rtcCreateDataChannel: function(pc, pLabel, unordered, maxRetransmits, maxPacketLifeTime, pProtocol, negotiated, id) {
 			if(!pc) return 0;
 			var label = UTF8ToString(pLabel);
 			var peerConnection = WEBRTC.peerConnectionsMap[pc];
@@ -274,7 +274,7 @@
 			return WEBRTC.registerDataChannel(channel);
 		},
 
- 		rtcDeleteDataChannel: function(dc) {
+ 		wasm_rtcDeleteDataChannel: function(dc) {
 			var dataChannel = WEBRTC.dataChannelsMap[dc];
 			if(dataChannel) {
 				dataChannel.rtcUserDeleted = true;
@@ -282,7 +282,7 @@
 			}
 		},
 
-		rtcSetDataChannelCallback: function(pc, dataChannelCallback) {
+		wasm_rtcSetDataChannelCallback: function(pc, dataChannelCallback) {
 			if(!pc) return;
 			var peerConnection = WEBRTC.peerConnectionsMap[pc];
 			peerConnection.ondatachannel = function(evt) {
@@ -293,43 +293,43 @@
 			};
 		},
 
-		rtcSetLocalDescriptionCallback: function(pc, descriptionCallback) {
+		wasm_rtcSetLocalDescriptionCallback: function(pc, descriptionCallback) {
 			if(!pc) return;
 			var peerConnection = WEBRTC.peerConnectionsMap[pc];
 			peerConnection.rtcDescriptionCallback = descriptionCallback;
 		},
 
-		rtcSetLocalCandidateCallback: function(pc, candidateCallback) {
+		wasm_rtcSetLocalCandidateCallback: function(pc, candidateCallback) {
 			if(!pc) return;
 			var peerConnection = WEBRTC.peerConnectionsMap[pc];
 			peerConnection.rtcCandidateCallback = candidateCallback;
 		},
 
-		rtcSetStateChangeCallback: function(pc, stateChangeCallback) {
+		wasm_rtcSetStateChangeCallback: function(pc, stateChangeCallback) {
 			if(!pc) return;
 			var peerConnection = WEBRTC.peerConnectionsMap[pc];
 			peerConnection.rtcStateChangeCallback = stateChangeCallback;
 		},
 
-		rtcSetIceStateChangeCallback: function(pc, iceStateChangeCallback) {
+		wasm_rtcSetIceStateChangeCallback: function(pc, iceStateChangeCallback) {
 			if(!pc) return;
 			var peerConnection = WEBRTC.peerConnectionsMap[pc];
 			peerConnection.rtcIceStateChangeCallback = iceStateChangeCallback;
 		},
 
-		rtcSetGatheringStateChangeCallback: function(pc, gatheringStateChangeCallback) {
+		wasm_rtcSetGatheringStateChangeCallback: function(pc, gatheringStateChangeCallback) {
 			if(!pc) return;
 			var peerConnection = WEBRTC.peerConnectionsMap[pc];
 			peerConnection.rtcGatheringStateChangeCallback = gatheringStateChangeCallback;
 		},
 
-		rtcSetSignalingStateChangeCallback: function(pc, signalingStateChangeCallback) {
+		wasm_rtcSetSignalingStateChangeCallback: function(pc, signalingStateChangeCallback) {
 			if(!pc) return;
 			var peerConnection = WEBRTC.peerConnectionsMap[pc];
 			peerConnection.rtcSignalingStateChangeCallback = signalingStateChangeCallback;
 		},
 
-		rtcSetRemoteDescription: function(pc, pSdp, pType) {
+		wasm_rtcSetRemoteDescription: function(pc, pSdp, pType) {
 			var description = new RTCSessionDescription({
 				sdp: UTF8ToString(pSdp),
 				type: UTF8ToString(pType),
@@ -353,7 +353,7 @@
 				});
 		},
 
-		rtcAddRemoteCandidate: function(pc, pCandidate, pSdpMid) {
+		wasm_rtcAddRemoteCandidate: function(pc, pCandidate, pSdpMid) {
 			var iceCandidate = new RTCIceCandidate({
 				candidate: UTF8ToString(pCandidate),
 				sdpMid: UTF8ToString(pSdpMid),
@@ -365,45 +365,45 @@
 				});
 		},
 
-		rtcCloseDataChannel: function(dc) {
+		wasm_rtcCloseDataChannel: function(dc) {
 			if (!dc) return;
 			var dataChannel = WEBRTC.dataChannelsMap[dc];
 			dataChannel.close();
 		},
 
-		rtcGetDataChannelLabel: function(dc, pBuffer, size) {
+		wasm_rtcGetDataChannelLabel: function(dc, pBuffer, size) {
 			if(!dc) return 0;
 			var label = WEBRTC.dataChannelsMap[dc].label;
 			stringToUTF8(label, pBuffer, size);
 			return lengthBytesUTF8(label);
 		},
 
-		rtcGetDataChannelProtocol: function(dc, pBuffer, size) {
+		wasm_rtcGetDataChannelProtocol: function(dc, pBuffer, size) {
 			if(!dc) return 0;
 			var protocol = WEBRTC.dataChannelsMap[dc].protocol || "";
 			stringToUTF8(protocol, pBuffer, size);
 			return lengthBytesUTF8(protocol);
 		},
 
-		rtcGetDataChannelUnordered: function(dc) {
+		wasm_rtcGetDataChannelUnordered: function(dc) {
 			if(!dc) return 0;
 			var dataChannel = WEBRTC.dataChannelsMap[dc];
 			return dataChannel.ordered ? 0 : 1;
 		},
 
-		rtcGetDataChannelMaxPacketLifeTime: function(dc) {
+		wasm_rtcGetDataChannelMaxPacketLifeTime: function(dc) {
 			if(!dc) return -1;
 			var dataChannel = WEBRTC.dataChannelsMap[dc];
 			return dataChannel.maxPacketLifeTime !== null ? dataChannel.maxPacketLifeTime : -1;
 		},
 
-		rtcGetDataChannelMaxRetransmits: function(dc) {
+		wasm_rtcGetDataChannelMaxRetransmits: function(dc) {
 			if(!dc) return -1;
 			var dataChannel = WEBRTC.dataChannelsMap[dc];
 			return dataChannel.maxRetransmits !== null ? dataChannel.maxRetransmits : -1;
 		},
 
-		rtcSetOpenCallback: function(dc, openCallback) {
+		wasm_rtcSetOpenCallback: function(dc, openCallback) {
 			if(!dc) return;
 			var dataChannel = WEBRTC.dataChannelsMap[dc];
 			var cb = function() {
@@ -415,7 +415,7 @@
 			if(dataChannel.readyState == 'open') setTimeout(cb, 0);
 		},
 
-		rtcSetErrorCallback: function(dc, errorCallback) {
+		wasm_rtcSetErrorCallback: function(dc, errorCallback) {
 			if(!dc) return;
 			var dataChannel = WEBRTC.dataChannelsMap[dc];
 			var cb = function(evt) {
@@ -428,7 +428,7 @@
 			dataChannel.onerror = cb;
 		},
 
-		rtcSetMessageCallback: function(dc, messageCallback) {
+		wasm_rtcSetMessageCallback: function(dc, messageCallback) {
 			if(!dc) return;
 			var dataChannel = WEBRTC.dataChannelsMap[dc];
 			dataChannel.onmessage = function(evt) {
@@ -455,7 +455,7 @@
 			};
 		},
 
-		rtcSetBufferedAmountLowCallback: function(dc, bufferedAmountLowCallback) {
+		wasm_rtcSetBufferedAmountLowCallback: function(dc, bufferedAmountLowCallback) {
 			if(!dc) return;
 			var dataChannel = WEBRTC.dataChannelsMap[dc];
 			var cb = function(evt) {
@@ -466,19 +466,19 @@
 			dataChannel.onbufferedamountlow = cb;
 		},
 
-		rtcGetBufferedAmount: function(dc) {
+		wasm_rtcGetBufferedAmount: function(dc) {
 			if(!dc) return 0;
 			var dataChannel = WEBRTC.dataChannelsMap[dc];
 			return dataChannel.bufferedAmount;
 		},
 
-		rtcSetBufferedAmountLowThreshold: function(dc, threshold) {
+		wasm_rtcSetBufferedAmountLowThreshold: function(dc, threshold) {
 			if(!dc) return;
 			var dataChannel = WEBRTC.dataChannelsMap[dc];
 			dataChannel.bufferedAmountLowThreshold = threshold;
 		},
 
-		rtcSendMessage: function(dc, pBuffer, size) {
+		wasm_rtcSendMessage: function(dc, pBuffer, size) {
 			if(!dc) return -1;
 			var dataChannel = WEBRTC.dataChannelsMap[dc];
 			if(dataChannel.readyState != 'open') return -1;
@@ -499,7 +499,7 @@
 			}
 		},
 
-		rtcSetUserPointer: function(i, ptr) {
+		wasm_rtcSetUserPointer: function(i, ptr) {
 			if(WEBRTC.peerConnectionsMap[i]) WEBRTC.peerConnectionsMap[i].rtcUserPointer = ptr;
 			if(WEBRTC.dataChannelsMap[i]) WEBRTC.dataChannelsMap[i].rtcUserPointer = ptr;
 		},
